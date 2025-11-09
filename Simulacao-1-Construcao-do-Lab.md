@@ -33,7 +33,7 @@ Ao tentar testar a conectividade com `ping 10.0.0.10`, recebi `Request timed out
 **Como eu resolvi (Troubleshooting):**
 1.  **Verifiquei os IPs:** Usei `ipconfig` em ambas as máquinas. Os IPs estavam corretos (`.10` e `.20`).
 2.  **Verifiquei a Rede:** Conferi no VirtualBox se as duas VMs estavam na rede `intnet`. Estavam.
-3.  **Achei o Culpado:** O **Firewall do Windows Server**.
+3.  **O Problema:** O **Firewall do Windows Server**.
 4.  **O Teste:** Desativei o firewall no `SRV-DC01` e o `ping` funcionou imediatamente.
 
 Após isto, promovi o `SRV-DC01` a Controlador de Domínio (usando `Add Roles and Features`) e criei o meu domínio: **`MeuLab.local`**.
@@ -46,12 +46,11 @@ Ao tentar fazer o `WKS-01` entrar no domínio, ele falhou de novo: `The specifie
 </p>
 
 **Como eu resolvi:**
-Era o mesmo culpado! O Firewall do Servidor estava a bloquear os serviços que o AD usa (DNS, LDAP, etc.). Ao promover o servidor, um novo perfil de firewall ("Domain") foi ativado.
+Era o mesmo problema! O Firewall do Servidor estava a bloquear os serviços que o AD usa (DNS, LDAP, etc.). Ao promover o servidor, um novo perfil de firewall ("Domain") foi ativado.
 1.  Desativei os 3 perfis de firewall no `SRV-DC01` (Domain, Private, Public).
 2.  Na `WKS-01`, tentei ingressar de novo, mas usei o utilizador correto: **`MEULAB\Administrator`** (e não o utilizador local).
 3.  Funcionou! A máquina reiniciou e "entrou" na empresa.
 
-**Lição Aprendida:** O Firewall é o primeiro suspeito em 90% dos problemas de rede.
 
 ---
 
@@ -102,4 +101,4 @@ Com o laboratório funcional, executei um cenário do mundo real: integrar novos
 
 ## 5. Conclusão Final do Projeto
 
-Este laboratório foi um sucesso. Consegui construir um ambiente Active Directory funcional e, mais importante, aprendi a **diagnosticar e resolver problemas** do mundo real (Firewall, DNS, Permissões). Pratiquei as 3 tarefas centrais de um Analista de Suporte (Identidade, Acesso e Hardening).
+Este laboratório foi finalizado com sucesso. Consegui construir um ambiente Active Directory funcional e, mais importante, aprendi a **diagnosticar e resolver problemas** do mundo real (Firewall, DNS, Permissões). Pratiquei as 3 tarefas centrais de um Analista de Suporte (Identidade, Acesso e Hardening).
